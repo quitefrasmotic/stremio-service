@@ -165,7 +165,7 @@ copyright = "Copyright (C) 2017-2025 Smart Code OOD 203358507"
 url_scheme = "stremio"
 executable = "stremio-service"
 bins = [
-    ["target/release/stremio-service", "stremio-service"],
+    ["target/aarch64-apple-darwin/release/stremio-service", "stremio-service"],
     ["resources/bin/macos/stremio-runtime", "stremio-runtime"],
     ["resources/bin/macos/server.js", "server.js"],
     ["resources/bin/macos/ffmpeg", "ffmpeg"],

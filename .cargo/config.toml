@@ -1,2 +1,5 @@
 [alias]
 macos = "run --bin bundle-macos"
+
+[build]
+target = "aarch64-apple-darwin"
