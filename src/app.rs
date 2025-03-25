@@ -11,6 +11,7 @@ use std::path::PathBuf;
 use tao::{
     event::Event,
     event_loop::{ControlFlow, EventLoop},
+    platform::macos::{EventLoopExtMacOS, ActivationPolicy},
     menu::{ContextMenu, MenuId, MenuItemAttributes},
     system_tray::{SystemTray, SystemTrayBuilder},
     TrayId,
@@ -131,7 +132,17 @@ impl Application {
         let _fruit_app = register_apple_event_callbacks();
 
         // Showing the system tray icon as soon as possible to give the user a feedback
+        #[cfg(not(target_os = "macos"))]
         let event_loop = EventLoop::new();
+
+        // Set activation policy to "Accessory" on macOS so app doesn't stay in dock
+        #[cfg(target_os = "macos")]
+        let event_loop = {
+            let mut event_loop = EventLoop::new();
+            event_loop.set_activation_policy(ActivationPolicy::Accessory);
+            event_loop
+        };
+
         let (mut system_tray, open_item_id, quit_item_id) = create_system_tray(&event_loop)?;
 
         let current_version = env!("CARGO_PKG_VERSION")

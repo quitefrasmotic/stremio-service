@@ -63,39 +63,41 @@ fn main() -> anyhow::Result<()> {
         contents_path.display()
     ))?;
 
-    let info_plist = format!("
-        <?xml version=\"1.0\" encoding=\"UTF-8\"?>
-        <!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
-        <plist version=\"1.0\">
+    let info_plist = format!(
+"<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<plist version=\"1.0\">
+    <dict>
+        <key>CFBundleDisplayName</key>
+        <string>{display_name}</string>
+        <key>CFBundleIdentifier</key>
+        <string>{identifier}</string>
+        <key>CFBundleVersion</key>
+        <string>{version}</string>
+        <key>CFBundleShortVersionString</key>
+        <string>{version}</string>
+        <key>CFBundleIconFile</key>
+        <string>{icon_file}</string>
+        <key>CFBundleExecutable</key>
+        <string>{executable}</string>
+        <key>NSHumanReadableCopyright</key>
+        <string>{copyright}</string>
+        <key>LSUIElement</key>
+        <string>YES</string>
+        <key>CFBundleURLTypes</key>
+        <array>
             <dict>
-                <key>CFBundleDisplayName</key>
-                <string>{display_name}</string>
-                <key>CFBundleIdentifier</key>
-                <string>{identifier}</string>
-                <key>CFBundleVersion</key>
-                <string>{version}</string>
-                <key>CFBundleShortVersionString</key>
-                <string>{version}</string>
-                <key>CFBundleIconFile</key>
-                <string>{icon_file}</string>
-                <key>CFBundleExecutable</key>
-                <string>{executable}</string>
-                <key>NSHumanReadableCopyright</key>
-                <string>{copyright}</string>
-                <key>CFBundleURLTypes</key>
+                <key>CFBundleURLName</key>
+                <string>{url_name}</string>
+                <key>CFBundleURLSchemes</key>
                 <array>
-                    <dict>
-                        <key>CFBundleURLName</key>
-                        <string>{url_name}</string>
-                        <key>CFBundleURLSchemes</key>
-                        <array>
-                            <string>{url_scheme}</string>
-                        </array>
-                    </dict>
+                    <string>{url_scheme}</string>
                 </array>
             </dict>
-        </plist>
-    ",
+        </array>
+    </dict>
+</plist>"
+    ,
         display_name = metadata.display_name,
         identifier = metadata.identifier,
         version = env!("CARGO_PKG_VERSION"),
